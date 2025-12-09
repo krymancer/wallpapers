@@ -15,6 +15,10 @@ function generateMarkdown(imageFolder, outputFile, repoUrl, header, description,
     let row = '';
 
     const files = fs.readdirSync(imageFolder);
+    const ref = `refs/heads/${execSync('git rev-parse --abbrev-ref HEAD').toString().trim()}` ;
+    repoUrl = `${repoUrl}/${imageFolder}/${ref}`;
+
+    console.log(repoUrl)
     
     for (const file of files) {
         const filePath = path.join(imageFolder, file);
@@ -22,6 +26,7 @@ function generateMarkdown(imageFolder, outputFile, repoUrl, header, description,
         
         if (fs.statSync(filePath).isFile() && imageExtensions.includes(ext)) {
             const url = `${repoUrl}/${imageFolder}/${file}`;
+            console.log(url);
             row += `| ![${file}](${url}) `;
             counter++;
             
@@ -63,4 +68,4 @@ const header = '# Wallpapers';
 const description = "This is my repository of wallpapers which I've collected over the years. A catppuccin-mocha version is available [here](https://github.com/orangci/walls-catppuccin-mocha).";
 const disclaimer = "> Disclaimer: These wallpapers are sourced from many, many, many sources on the internet. I did not make any of these, although I have *edited* several of them a little bit. Zero credit belongs to me in that regard, I'm simply the collector. If you are the artist of one of these wallpapers, please **contact me**, I will happily take the wallpaper down or add credit in this README.";
 
-generateMarkdown('wallpapers', 'wallpapers/README.md', `${baseUrl}`, header, description, disclaimer);
+generateMarkdown('wallpapers', 'README.md', `${baseUrl}`, header, description, disclaimer);
