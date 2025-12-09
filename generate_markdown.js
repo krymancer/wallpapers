@@ -21,7 +21,7 @@ function generateMarkdown(imageFolder, outputFile, repoUrl, header, description,
         const ext = path.extname(file).toLowerCase();
         
         if (fs.statSync(filePath).isFile() && imageExtensions.includes(ext)) {
-            const url = `${repoUrl}/${file}`;
+            const url = `${repoUrl}/${imageFolder}/${file}`;
             row += `| ![${file}](${url}) `;
             counter++;
             
